@@ -228,11 +228,32 @@ document.getElementById('productsSection')
 .scrollIntoView({behavior:'smooth'});
 }
 
-function addToCart(n,p){
-let i = cart.find(x => x.name === n);
-if(i){ i.qty++; } else { cart.push({name: n, price: p, qty: 1}); }
-updateCart();
-document.getElementById('cartDrawer').classList.add('open');
+async function addToCart() {
+  const item = JSON.parse(localStorage.getItem("selectedItem"));
+
+  if (!item) {
+    alert("No item selected");
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existing = cart.find(i => i.name === item.name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      name: item.name,
+      price: item.yourPrice || item.price || 1000,
+      img: item.img,
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Added to cart!");
 }
 
 function openProduct(item){
@@ -252,7 +273,10 @@ function toggleCart(){document.getElementById('cartDrawer').classList.toggle('op
 
 async function placeOrder(){
 
-if(cart.length===0){alert('Cart is empty'); return;}
+if(cart.length===0){
+alert('Cart is empty');
+return;
+}
 
 let orderData = {
 items: cart,
@@ -263,10 +287,13 @@ phone: document.getElementById('phone').value,
 address: document.getElementById('address').value
 };
 
-let { error } = await client.from("orders").insert([orderData]);
+const { data, error } = await client
+.from("orders")
+.insert([orderData])
+.select();
 
 if(error){
-alert("Order failed");
+alert("Order failed: " + error.message);
 console.log(error);
 return;
 }
@@ -301,4 +328,4 @@ document.getElementById('repairForm').reset();
 }
 </script>
 </body>
-</html> 
+</html>
