@@ -31,15 +31,15 @@ function backend(name){
 name = name.toLowerCase();
 
 /* =========================
-   ?? EAR BUDS SYSTEM
+    EAR BUDS SYSTEM
 ========================= */
 if(name.includes("buds")){
 return {
 type:"Premium Audio Device",
 condition:"New 10/10",
-battery:"6?10 Hours Backup",
+battery:"6-10 Hours Backup",
 warranty:"6 Months Warranty",
-delivery:"Free All Pakistan",
+delivery:"300",
 
 features:[
 "Hi-Fi Stereo Sound",
@@ -68,7 +68,7 @@ price:"3000 - 5500 PKR"
 }
 
 /* =========================
-   ?? CHARGERS SYSTEM
+    CHARGERS SYSTEM
 ========================= */
 if(name.includes("charger")){
 return {
@@ -101,7 +101,7 @@ price:"900 - 2200 PKR"
 }
 
 /* =========================
-   ?? BATTERY SYSTEM
+    BATTERY SYSTEM
 ========================= */
 if(name.includes("battery")){
 return {
@@ -133,7 +133,7 @@ price:"1200 - 3500 PKR"
 }
 
 /* =========================
-   ?? SCREEN REPAIR
+    SCREEN REPAIR
 ========================= */
 if(name.includes("screen")){
 return {
@@ -228,7 +228,7 @@ document.getElementById("page").innerHTML = `
 
     <input type="number" value="1" min="1">
 
-    <button>ADD TO CART</button>
+    <button onclick="addToCart()">ADD TO CART</button>
   </div>
 
   <div class="box">
@@ -243,7 +243,7 @@ document.getElementById("page").innerHTML = `
   </ul>
 </div>
     <div class="box">
-  <h3>What?s in the Box</h3>
+  <h3>What is in the Box</h3>
   <ul>
     ${b.box.map(bx=>`<li>?? ${bx}</li>`).join('')}
   </ul>
